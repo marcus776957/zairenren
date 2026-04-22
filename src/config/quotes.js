@@ -1,0 +1,36 @@
+export const QUOTES = [
+  { text: '再忍忍，钱在赚着呢', author: '' },
+  { text: '每一秒都在变富，坚持住', author: '' },
+  { text: '工作不是煎熬，是每秒都在增值', author: '' },
+  { text: '忍一时风平浪静，忍一世财务自由', author: '' },
+  { text: '你看到的不是时间，是钱在流淌', author: '' },
+  { text: '经济下行是暂时的，你的能力是永恒的', author: '' },
+  { text: '别急，好工作值得等待', author: '' },
+  { text: '今天流的汗，都是明天的存款', author: '' },
+  { text: '稳定的收入就是最好的安全感', author: '' },
+  { text: '每一分钟都不是白费的，看数字就知道了', author: '' },
+  { text: '辞职容易找工作难，再想想', author: '' },
+  { text: '工资到手的那一刻，一切都值得', author: '' },
+  { text: '坚持就是胜利，胜利就是加薪', author: '' },
+  { text: '打工人的自我修养：忍住，数钱', author: '' },
+  { text: '不积跬步无以至千里，不积秒薪无以成月薪', author: '' },
+  { text: '你以为在消耗时间，其实是在积累财富', author: '' },
+  { text: '别冲动，先把今天的钱赚完', author: '' },
+  { text: '工作使人快乐，发工资使人更快乐', author: '' },
+  { text: '忍住别走，外面更难', author: '' },
+  { text: '今天的你比昨天多了8小时的收入', author: '' },
+  { text: '珍惜当下，每秒都在进账', author: '' },
+  { text: '不辞职是今年最明智的决定', author: '' },
+  { text: '当你想放弃时，看看你赚了多少', author: '' },
+  { text: '钱虽不多，但一直在涨', author: '' },
+  { text: '稳定压倒一切，包括你的辞职信', author: '' },
+  { text: '别人在找工作，你在赚钱，这就是差距', author: '' },
+  { text: '忍一忍，海阔天空；走一走，前路茫茫', author: '' },
+  { text: '你的存款需要你，别让它失望', author: '' },
+  { text: '每多待一秒，银行卡就多一笔', author: '' },
+  { text: '打工人打工魂，打工都是人上人', author: '' },
+]
+
+export function getRandomQuote() {
+  return QUOTES[Math.floor(Math.random() * QUOTES.length)]
+}

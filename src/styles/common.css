@@ -1,0 +1,14 @@
+/* ===== 全局基础 ===== */
+page {
+  background: #f0f2f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  color: #333;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+view,
+text,
+input {
+  box-sizing: border-box;
+}
