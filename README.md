@@ -2,6 +2,8 @@
 
 > 哄自己上班防止裸辞的网站
 
+**👉 在线使用：[https://www.zairenren.fun](https://www.zairenren.fun)**
+
 一款实时计算打工收入的趣味工具。在经济下行、就业形势严峻的当下，看着钱一秒一秒地往上涨，辞职的念头也就淡了。
 
 **作者：** Marcus | **小红书：** https://xhslink.com/m/Ah9gwxzdnP3
