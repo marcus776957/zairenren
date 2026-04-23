@@ -139,10 +139,14 @@ function openXHS() {
 const formattedEarnings = computed(() => formatMoney(timer.currentEarnings))
 
 const liquidPercent = computed(() => {
-  if (goalsStore.goals.length === 0) return 0
-  const maxPrice = Math.max(...goalsStore.goals.map((g) => g.price))
-  if (maxPrice <= 0) return 0
-  return Math.min(100, (timer.currentEarnings / maxPrice) * 100)
+  if (goalsStore.goals.length > 0) {
+    const maxPrice = Math.max(...goalsStore.goals.map((g) => g.price))
+    if (maxPrice > 0) return Math.min(100, (timer.currentEarnings / maxPrice) * 100)
+  }
+  // 无目标时用日薪作为满格值
+  const dailyEarn = salary.perSecondRate * salary.dailyHours * 3600
+  if (dailyEarn <= 0) return 0
+  return Math.min(100, (timer.currentEarnings / dailyEarn) * 100)
 })
 
 const coinRows = computed(() => {
