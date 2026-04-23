@@ -22,14 +22,14 @@
             <!-- 金币堆叠层 -->
             <view class="coin-stack" :style="{ height: liquidPercent + '%' }">
               <view v-for="row in coinRows" :key="row" class="coin-row">
-                <view class="gold-coin sm"></view>
-                <view v-if="row % 2 === 0" class="gold-coin sm"></view>
+                <view class="gold-coin sm">¥</view>
+                <view v-if="row % 2 === 0" class="gold-coin sm">¥</view>
               </view>
             </view>
             <!-- 掉落金币 -->
             <view class="coin-layer">
               <view v-for="c in coins" :key="c.id" class="coin-drop" :style="{ left: c.x + '%' }">
-                <view class="gold-coin drop-size"></view>
+                <view class="gold-coin drop-size">¥</view>
               </view>
             </view>
           </view>
@@ -143,15 +143,18 @@ const liquidPercent = computed(() => {
     const maxPrice = Math.max(...goalsStore.goals.map((g) => g.price))
     if (maxPrice > 0) return Math.min(100, (timer.currentEarnings / maxPrice) * 100)
   }
-  // 无目标时用100元作为满格值，金币能快速显现
-  if (timer.currentEarnings <= 0) return 0
-  return Math.min(100, (timer.currentEarnings / 100) * 100)
+  // 无目标时用日薪作为满格值
+  const dailyEarn = salary.perSecondRate * salary.dailyHours * 3600
+  if (dailyEarn <= 0 || timer.currentEarnings <= 0) return 0
+  return Math.min(100, (timer.currentEarnings / dailyEarn) * 100)
 })
 
 const coinRows = computed(() => {
   const pct = liquidPercent.value
-  const rows = Math.floor(pct / 8)
-  return Math.max(0, rows)
+  if (pct <= 0) return 0
+  // 最少1行（有收入就显示），最多20行
+  const rows = Math.max(1, Math.floor(pct / 5))
+  return Math.min(20, rows)
 })
 
 const goalProgress = computed(() =>
@@ -207,14 +210,14 @@ function toggleTimer() {
     }
   } else {
     timer.start()
-    coinInterval = setInterval(spawnCoin, 2500)
+    coinInterval = setInterval(spawnCoin, 1500)
   }
 }
 
 onMounted(() => {
   timer.restoreSession()
   if (timer.isRunning) {
-    coinInterval = setInterval(spawnCoin, 2500)
+    coinInterval = setInterval(spawnCoin, 1500)
   }
 })
 
@@ -349,13 +352,13 @@ onUnmounted(() => {
   flex-direction: column-reverse;
   align-items: center;
   gap: 0;
-  padding: 0 20rpx;
+  padding: 0 12rpx;
 }
 .coin-row {
   display: flex;
   justify-content: center;
   gap: 4rpx;
-  margin-top: -12rpx;
+  margin-top: -16rpx;
 }
 /* ===== CSS 金币 ===== */
 .gold-coin {
@@ -365,29 +368,22 @@ onUnmounted(() => {
     0 2rpx 6rpx rgba(0, 0, 0, 0.25),
     inset 0 -2rpx 4rpx rgba(0, 0, 0, 0.2),
     inset 0 2rpx 4rpx rgba(255, 255, 255, 0.4);
-  position: relative;
-}
-.gold-coin::after {
-  content: '¥';
-  position: absolute;
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: inherit;
   font-weight: 900;
   color: #92400e;
   text-shadow: 0 1rpx 2rpx rgba(255, 255, 255, 0.3);
 }
 .gold-coin.sm {
-  width: 40rpx;
-  height: 40rpx;
-  font-size: 22rpx;
+  width: 60rpx;
+  height: 60rpx;
+  font-size: 28rpx;
 }
 .gold-coin.drop-size {
-  width: 48rpx;
-  height: 48rpx;
-  font-size: 26rpx;
+  width: 64rpx;
+  height: 64rpx;
+  font-size: 30rpx;
 }
 
 /* ===== 掉落金币 ===== */
@@ -399,19 +395,19 @@ onUnmounted(() => {
 }
 .coin-drop {
   position: absolute;
-  top: -56rpx;
-  animation: coin-fall 1s ease-in forwards;
+  top: 0;
+  animation: coin-fall 1.2s ease-in forwards;
 }
 @keyframes coin-fall {
   0% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(-64rpx) rotate(0deg);
     opacity: 1;
   }
-  70% {
+  80% {
     opacity: 1;
   }
   100% {
-    transform: translateY(320rpx) rotate(540deg);
+    transform: translateY(280rpx) rotate(540deg);
     opacity: 0;
   }
 }
