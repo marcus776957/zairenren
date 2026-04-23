@@ -143,10 +143,9 @@ const liquidPercent = computed(() => {
     const maxPrice = Math.max(...goalsStore.goals.map((g) => g.price))
     if (maxPrice > 0) return Math.min(100, (timer.currentEarnings / maxPrice) * 100)
   }
-  // 无目标时用日薪作为满格值
-  const dailyEarn = salary.perSecondRate * salary.dailyHours * 3600
-  if (dailyEarn <= 0) return 0
-  return Math.min(100, (timer.currentEarnings / dailyEarn) * 100)
+  // 无目标时用100元作为满格值，金币能快速显现
+  if (timer.currentEarnings <= 0) return 0
+  return Math.min(100, (timer.currentEarnings / 100) * 100)
 })
 
 const coinRows = computed(() => {
